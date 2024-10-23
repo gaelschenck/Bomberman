@@ -1,2 +1,0 @@
-# Bomberman
-projet bomberman python
