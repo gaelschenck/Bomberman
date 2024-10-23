@@ -11,18 +11,17 @@ EXPLOSION = 'X'
 
 class map:
     def init_grille(self):
-            self = [[VIDE for _ in range(TAILLE_GRILLE)] for _ in range(TAILLE_GRILLE)]
-            x, y = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
-            self[x][y] = MUR
-            w, z = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
-            self[w][z] = MUR_INCASABLE
-    def display_map(self):
-           for ligne in self:
+            self.grille = [[VIDE for _ in range(TAILLE_GRILLE)] for _ in range(TAILLE_GRILLE)]
+            for _ in range(20):
+                x, y = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
+                self.grille[x][y] = MUR
+            for _ in range(20):    
+                w, z = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
+                self.grille[w][z] = MUR_INCASABLE
+            for ligne in self.grille:
                 print(' '.join(ligne))
-    def jouer(self):
-          self.display_map()
 
 map_1 = map()
 
-map_1.jouer()
+map_1.init_grille()
 
