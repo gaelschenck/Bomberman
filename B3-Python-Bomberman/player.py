@@ -1,6 +1,6 @@
 # player.py
 class Player:
-    def __init__(self, name, start_row=0, start_col=0):
+    def __init__(self, name, start_row=1, start_col=1):
         self.name = name
         self.row = start_row
         self.col = start_col

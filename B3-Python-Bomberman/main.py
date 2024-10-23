@@ -1,35 +1,75 @@
-from board import Board  # Importer la classe Board de board.py
-from player import Player
+import random
+import os
+import time
 
-def main():
-    # Initialiser un plateau (hauteur, longueur)
-    board = Board(5, 15)
-    
-    # Afficher le plateau vide
-    board.display()
-    
-    # Créer un joueur
-    player = Player(name="Bomberman", start_row=2, start_col=2)
-    
-    # Afficher la position initiale du joueur
-    print(player)
-    
-    # Déplacer le joueur
-    if keyboard.is_pressed('z'):
-        player.move_up()
-        print(player)  # Devrait être à (1, 2)
+TAILLE_GRILLE = 10
+VIDE = ' '
+MUR = '#'
+MUR_INCASSABLE = "||"
+JOUEUR = 'P'
+BOMBE = 'B'
+EXPLOSION = 'X'
 
-        player.move_left()
-        print(player)  # Devrait être à (1, 1)
-
-        player.move_down(board.rows)
-        print(player)  # Devrait être à (2, 1)
-
-        player.move_right(board.cols)
-        print(player)  # Devrait être à (2, 2)  
+# Initialisation de la grille avec murs et murs incassables
+def init_grille():
+    grille = [[VIDE for _ in range(TAILLE_GRILLE)] for _ in range(TAILLE_GRILLE)]
     
-    # Afficher le plateau mis à jour
-    board.display()
+    # Placement des murs cassables
+    for _ in range(20):
+        x, y = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
+        grille[x][y] = MUR
+    
+    # Placement des murs incassables
+    for _ in range(20):    
+        w, z = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
+        grille[w][z] = MUR_INCASSABLE 
+    
+    return grille
 
-if __name__ == "__main__":
-    main()
+# Affichage de la grille
+def afficher_grille(grille, joueur_x, joueur_y):
+    os.system('cls' if os.name == 'nt' else 'clear')  # Nettoyer le terminal
+    for i in range(TAILLE_GRILLE):
+        for j in range(TAILLE_GRILLE):
+            if i == joueur_x and j == joueur_y:
+                print(JOUEUR, end=' ')
+            else:
+                print(grille[i][j], end=' ')
+        print()
+
+# Fonction pour vérifier si le déplacement est valide
+def deplacement_valide(grille, x, y):
+    if 0 <= x < TAILLE_GRILLE and 0 <= y < TAILLE_GRILLE:  # Vérifie que le joueur reste dans la grille
+        if grille[x][y] == VIDE:  # Le joueur peut se déplacer sur une case vide
+            return True
+    return False
+
+# Fonction pour déplacer le joueur
+def deplacer_joueur(grille, joueur_x, joueur_y):
+    while True:
+        afficher_grille(grille, joueur_x, joueur_y)
+        move = input("Déplacez-vous avec Z (haut), S (bas), Q (gauche), D (droite) : ").lower()
+        
+        if move == 'z':  # Haut
+            if deplacement_valide(grille, joueur_x - 1, joueur_y):
+                joueur_x -= 1
+        elif move == 's':  # Bas
+            if deplacement_valide(grille, joueur_x + 1, joueur_y):
+                joueur_x += 1
+        elif move == 'q':  # Gauche
+            if deplacement_valide(grille, joueur_x, joueur_y - 1):
+                joueur_y -= 1
+        elif move == 'd':  # Droite
+            if deplacement_valide(grille, joueur_x, joueur_y + 1):
+                joueur_y += 1
+
+        time.sleep(0.1)  # Petite pause pour éviter trop de rapidité dans les mouvements
+
+# Programme principal
+grille = init_grille()
+
+# Position initiale du joueur
+joueur_x, joueur_y = 1, 1
+
+# Déplacement du joueur
+deplacer_joueur(grille, joueur_x, joueur_y)
