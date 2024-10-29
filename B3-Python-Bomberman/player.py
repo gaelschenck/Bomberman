@@ -1,5 +1,5 @@
 import threading
-
+import keyboard
 from bomb import explo_bomb, bomb, after_explo_bomb
 
 
@@ -38,18 +38,18 @@ def place_bomb(map,position):
         x = position['x']
         y = position['y'] + 1
         timer_1 = threading.Timer(3, explo_bomb, args=(map, x, y))
-        timer_2 = threading.Timer(3, after_explo_bomb, args=(map, x, y))
+        timer_2 = threading.Timer(4, after_explo_bomb, args=(map, x, y))
         timer_1.start()
         timer_2.start()
 def move(map, position,player):
-    key = input("q: move_left, z: move_top, d: move_right, s: move_dwon, e: placer une bombe: ") 
-    if key == 'q':
+   
+    if keyboard.is_pressed('q'):
         move_left(map, position, player)
-    if key == 's':
+    if keyboard.is_pressed('s'):
         move_dwon(map, position,player)
-    if key == 'd':
+    if keyboard.is_pressed('d'):
         move_right(map,position,player)
-    if key == 'z':
+    if keyboard.is_pressed('z'):
         move_up(map,position,player)
-    if key == 'e':
+    if keyboard.is_pressed('e'):
         place_bomb(map,position)

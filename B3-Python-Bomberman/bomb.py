@@ -1,4 +1,5 @@
 from sty import fg, RgbFg, Style
+from map import MUR
 
 fg.rouge = Style(RgbFg(255, 150, 50))
 fg.rouge = Style(RgbFg(255,0,0))
@@ -22,19 +23,21 @@ def explo_bomb(map,x,y):
         map[x + 1][y + 1] = bomb
 
 def after_explo_bomb(map,x,y):
-    if map[x-1][y] == bomb or map[x-1][y] == fg.rouge + "E" + fg.rs or map[x-1][y] == fg.orange + "|" + fg.rs:
+    if map[x][y] == bomb:
+        map[x][y] = " "
+    if map[x-1][y] == bomb or map[x-1][y] == MUR:
         map[x-1][y] =  " "
-    if map[x + 1][y] == bomb or map[x + 1][y] == fg.rouge + "E" + fg.rs or map[x + 1][y] == fg.orange + "|" + fg.rs:
+    if map[x + 1][y] == bomb or map[x + 1][y] == MUR:
         map[x + 1][y] = " "
-    if  map[x][y-1] == bomb or map[x][y-1] == fg.rouge + "E" + fg.rs or map[x][y-1] == fg.orange + "|" + fg.rs:
+    if  map[x][y-1] == bomb or map[x][y-1] == MUR:
         map[x][y-1] = " "
-    if map[x][y+1] == bomb or map[x][y+1] == fg.rouge + "E" + fg.rs or map[x][y+1] == fg.orange + "|" + fg.rs:
+    if map[x][y+1] == bomb or map[x][y+1] == MUR:
         map[x][y+1] = " "
-    if map[x + 1][y - 1] == bomb or map[x + 1][y - 1] == fg.rouge + "E" + fg.rs or map[x + 1][y - 1] == fg.orange + "|" + fg.rs:
+    if map[x + 1][y - 1] == bomb or map[x + 1][y - 1] == MUR:
         map[x + 1][y - 1] = " "
-    if map[x -1][y-1] == bomb or map[x -1][y-1] == fg.rouge + "E" + fg.rs or map[x -1][y-1] == fg.orange + "|" + fg.rs:
+    if map[x -1][y-1] == bomb or map[x -1][y-1] == MUR:
         map[x -1][y-1] = " "
-    if map[x -1][y + 1] == bomb or map[x -1][y + 1] == fg.rouge + "E" + fg.rs or map[x -1][y + 1]== fg.orange + "|" + fg.rs:
+    if map[x -1][y + 1] == bomb or map[x -1][y + 1] == MUR:
         map[x -1][y + 1] = " "
-    if map[x + 1][y + 1] == bomb or map[x + 1][y + 1] == fg.rouge + "E" + fg.rs or map[x + 1][y + 1]== fg.orange + "|" + fg.rs:
+    if map[x + 1][y + 1] == bomb or map[x + 1][y + 1] == MUR:
         map[x + 1][y + 1] = " "
