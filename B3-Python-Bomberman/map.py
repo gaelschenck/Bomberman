@@ -6,7 +6,6 @@ fg.rouge = Style(RgbFg(255,0,0))
 VIDE = " "
 MUR = fg.orange + '|' + fg.rs
 MUR_INCASABLE = "|"
-ENEMI = fg.rouge + "E" + fg.rs
 
 def creat_mur_enemi(TAILLE_GRILLE):
     grille = [[VIDE for _ in range(TAILLE_GRILLE)] for _ in range(TAILLE_GRILLE)]
@@ -15,9 +14,6 @@ def creat_mur_enemi(TAILLE_GRILLE):
         grille[x][y] = MUR
         z, w = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
         grille[w][z] = MUR_INCASABLE
-    for _ in range(5) :
-        a, b = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
-        grille[a][b] = ENEMI 
     return grille
 def creat_bordure(grille, TAILLE_GRILLE):
     for _ in range(TAILLE_GRILLE):
