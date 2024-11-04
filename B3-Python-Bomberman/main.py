@@ -1,79 +1,103 @@
-import random
+from map import init_map
+from player import  move_dwon,move_left,move_right,move_up,place_bomb
+from score import count_score
+from ennemy import count_enemy, move_enemi, near_enemi
+from sty import fg, rs, RgbFg, Style
+import keyboard
 import os
 import time
-import keyboard
+import textwrap
+TAILLE_GRILLE = 20
+player_1 = "p"
+fg.rouge = Style(RgbFg(255,0,0))
+ENEMI = fg.rouge + "E" + fg.rs
+position_player = {
+    "x" : 1,
+    "y" : 1
+}
 
-TAILLE_GRILLE = 10
-VIDE = ' '
-MUR = '#'
-MUR_INCASSABLE = "||"
-JOUEUR = 'P'
-BOMBE = 'B'
-EXPLOSION = 'X'
 
-# Initialisation de la grille avec murs et murs incassables
-def init_grille():
-    grille = [[VIDE for _ in range(TAILLE_GRILLE)] for _ in range(TAILLE_GRILLE)]
-    
-    # Placement des murs cassables
-    for _ in range(20):
-        x, y = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
-        grille[x][y] = MUR
-    
-    # Placement des murs incassables
-    for _ in range(20):    
-        w, z = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
-        grille[w][z] = MUR_INCASSABLE 
-    
-    return grille
+number_enemi = 0
+score_player = 0
+def display_map(map,position,player_1):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    map[position_enemi_1['x']][position_enemi_1['y']] = ENEMI
+    map[position_enemi_2['x']][position_enemi_2['y']] =  ENEMI
+    map[position_enemi_3['x']][position_enemi_3['y']] =  ENEMI
+    map[position['x']][position['y']] = player_1
+    for ligne in map:
+        print(' '.join(ligne))
+    print("q: move_left, z: move_top, d: move_right, s: move_dwon, e: placer une bombe: ") 
+    return map
+#map, position  = display_map_init_p(map)
+#qzds
+#map, position = move(map, position)
+#map, position = display_map(map)
+#zsd
 
-# Affichage de la grille
-def afficher_grille(grille, joueur_x, joueur_y):
-    os.system('cls' if os.name == 'nt' else 'clear')  # Nettoyer le terminal
-    for i in range(TAILLE_GRILLE):
-        for j in range(TAILLE_GRILLE):
-            if i == joueur_x and j == joueur_y:
-                print(JOUEUR, end=' ')
-            else:
-                print(grille[i][j], end=' ')
-        print()
 
-# Fonction pour vérifier si le déplacement est valide
-def deplacement_valide(grille, x, y):
-    if 0 <= x < TAILLE_GRILLE and 0 <= y < TAILLE_GRILLE:  # Vérifie que le joueur reste dans la grille
-        if grille[x][y] == VIDE:  # Le joueur peut se déplacer sur une case vide
-            return True
-    return False
 
-# Fonction pour déplacer le joueur
-def deplacer_joueur(grille, joueur_x, joueur_y):
+
+def center_text(text, width):
+    return '\n'.join([line.center(width) for line in textwrap.wrap(text, width)])
+
+text = "Ceci est un exemple de texte centré dans la console."
+width = 200  # Largeur de la console
+
+print("--------------------------------MODE DE JEU-----------------------------------------")
+print("1- MODE HISTOIRE")
+print("2- MODE COMPETITION")
+print("3- quitter le jeu")
+mode_jeu = input()
+if int(mode_jeu) == 1 :
+    TAILLE_GRILLE = input("entrer la dimension du map: ")
+    map = init_map(int(TAILLE_GRILLE))
+    position_enemi_1 = {
+       "x" : int(TAILLE_GRILLE) - 2,
+       "y" : int(TAILLE_GRILLE) - 2
+    }
+    position_enemi_2 = {
+       "x" : 1,
+       "y" : int(TAILLE_GRILLE) - 2
+    }
+    position_enemi_3 = {
+       "x" : int(TAILLE_GRILLE) - 2,
+       "y" : 1
+    }
     while True:
-        afficher_grille(grille, joueur_x, joueur_y)
-        move = input("Déplacez-vous avec Z (haut), S (bas), Q (gauche), D (droite) : ").lower()
-        
-        if keyboard.is_pressed('z'):  # Haut
-            if deplacement_valide(grille, joueur_x - 1, joueur_y):
-                joueur_x -= 1
-        elif keyboard.is_pressed('s'):  # Bas
-            if deplacement_valide(grille, joueur_x + 1, joueur_y):
-                joueur_x += 1
-        elif keyboard.is_pressed('q'):  # Gauche
-            if deplacement_valide(grille, joueur_x, joueur_y - 1):
-                joueur_y -= 1
-        elif keyboard.is_pressed('d'):  # Droite
-            if deplacement_valide(grille, joueur_x, joueur_y + 1):
-                joueur_y += 1
-        elif keyboard.is_pressed('x'): #Arrêt
-            print("Fin du jeu.")
+        time.sleep(0.1)
+        map = display_map(map,position_player,player_1)
+        if keyboard.is_pressed('q'):
+            move_left(map, position_player, player_1)
+            score_player = count_score(score_player)
+        if keyboard.is_pressed('s'):
+            move_dwon(map, position_player,player_1)
+            score_player = count_score(score_player)
+        if keyboard.is_pressed('d'):
+            move_right(map,position_player,player_1)
+            score_player = count_score(score_player)
+        if keyboard.is_pressed('z'):
+            move_up(map,position_player,player_1)
+            score_player = count_score(score_player)
+        if keyboard.is_pressed('e'):
+            place_bomb(map,position_player,ENEMI)
+        if keyboard.is_pressed(' '):
+            print("mettre le jeu  en pause")
+        print(score_player)
+        [bool1,x1,y1] = near_enemi(map,position_enemi_1)
+        [bool2,x2,y2] = near_enemi(map,position_enemi_2)
+        [bool3,x3,y3] = near_enemi(map,position_enemi_3)
+        if not(bool1 or bool3 or bool2) :
+            move_enemi(map,position_enemi_1,ENEMI)
+            move_enemi(map,position_enemi_2,ENEMI)
+            move_enemi(map,position_enemi_3,ENEMI)
+
+        if count_enemy(map,ENEMI) == 0 or bool1 or bool2 or bool3:
+            print(position_player)
+            print(x2,y2)
             break
+        print(number_enemi)
+        print(center_text(text, width))
+        
 
-        time.sleep(0.1)  # Petite pause pour éviter trop de rapidité dans les mouvements
 
-# Programme principal
-grille = init_grille()
-
-# Position initiale du joueur
-joueur_x, joueur_y = 1, 1
-
-# Déplacement du joueur
-deplacer_joueur(grille, joueur_x, joueur_y)
