@@ -1,6 +1,7 @@
 import random
 import os
 import time
+import keyboard
 
 TAILLE_GRILLE = 10
 VIDE = ' '
@@ -50,18 +51,21 @@ def deplacer_joueur(grille, joueur_x, joueur_y):
         afficher_grille(grille, joueur_x, joueur_y)
         move = input("Déplacez-vous avec Z (haut), S (bas), Q (gauche), D (droite) : ").lower()
         
-        if move == 'z':  # Haut
+        if keyboard.is_pressed('z'):  # Haut
             if deplacement_valide(grille, joueur_x - 1, joueur_y):
                 joueur_x -= 1
-        elif move == 's':  # Bas
+        elif keyboard.is_pressed('s'):  # Bas
             if deplacement_valide(grille, joueur_x + 1, joueur_y):
                 joueur_x += 1
-        elif move == 'q':  # Gauche
+        elif keyboard.is_pressed('q'):  # Gauche
             if deplacement_valide(grille, joueur_x, joueur_y - 1):
                 joueur_y -= 1
-        elif move == 'd':  # Droite
+        elif keyboard.is_pressed('d'):  # Droite
             if deplacement_valide(grille, joueur_x, joueur_y + 1):
                 joueur_y += 1
+        elif keyboard.is_pressed('x'): #Arrêt
+            print("Fin du jeu.")
+            break
 
         time.sleep(0.1)  # Petite pause pour éviter trop de rapidité dans les mouvements
 
