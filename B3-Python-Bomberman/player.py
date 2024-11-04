@@ -1,36 +1,44 @@
-# player.py
-class Player:
-    def __init__(self, name, start_row=1, start_col=1):
-        self.name = name
-        self.row = start_row
-        self.col = start_col
+import threading
+from bomb import explo_bomb, bomb, after_explo_bomb
 
-    def move_up(self):
-        if self.row > 0:
-            self.row -= 1
-        else:
-            print(f"{self.name} cannot move up, already at the top.")
 
-    def move_down(self, max_rows):
-        if self.row < max_rows - 1:
-            self.row += 1
-        else:
-            print(f"{self.name} cannot move down, already at the bottom.")
 
-    def move_left(self):
-        if self.col > 0:
-            self.col -= 1
-        else:
-            print(f"{self.name} cannot move left, already at the edge.")
+def move_dwon(map,position,player):
+    if map[position['x'] + 1][position['y']] == ' ' :
+        map[position['x']][position['y']] = ' '
+        map[position['x'] + 1][position['y']] = player
+        position['x'] = position['x']  + 1
+        print(position['x'])
+    
+    
+    
+def move_up(map,position,player):
+    if map[position['x'] - 1][position['y']] == ' ' :
+        map[position['x']][position['y']] = ' '
+        map[position['x'] - 1][position['y']] = player
+        position['x'] = position['x']  - 1   
 
-    def move_right(self, max_cols):
-        if self.col < max_cols - 1:
-            self.col += 1
-        else:
-            print(f"{self.name} cannot move right, already at the edge.")
+def move_right(map,position,player):
+    if map[position['x']][position['y'] + 1] == ' ' :
+        map[position['x']][position['y']] = ' '
+        print( map[position['x']][position['y']])
+        map[position['x']][position['y'] + 1 ] = player
+        position['y'] = position['y']  + 1   
 
-    def get_position(self):
-        return self.row, self.col
+def move_left(map,position,player):
+    if map[position['x']][position['y'] - 1] == ' ' :
+        map[position['x']][position['y']] = ' '
+        map[position['x']][position['y'] - 1] = player
+        position['y'] = position['y']  - 1 
 
-    def __str__(self):
-        return f"Player {self.name} is at position ({self.row}, {self.col})"
+def place_bomb(map,position,ENEMI):
+    if map[position['x']][position['y'] + 1] == ' ' :
+        map[position['x']][position['y'] + 1] = bomb
+        x = position['x']
+        y = position['y'] + 1
+        timer_1 = threading.Timer(3, explo_bomb, args=(map, x, y))
+        timer_2 = threading.Timer(4, after_explo_bomb, args=(map, x, y,ENEMI))
+        timer_1.start()
+        timer_2.start()
+
+    
