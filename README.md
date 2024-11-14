@@ -1,7 +1,5 @@
 # Bomberman
-choix techniques, dépendances, axes d'amélioration, …
-
-
+https://github.com/gaelschenck/Bomberman/tree/main
 projet bomberman python par RATSIMBAZAFY Tojoniaina Mbolasafidy et SCHENCK Gael 
 
 projet réalisé avec Python 3
@@ -23,3 +21,4 @@ Dépendances :
 Axe d'amélioration :
   Nous pourrions faire évoluer ce projet en une approche orientée objet, qui faciliterai l'utilisation du code sur du long terme.
   Nous pourrions ajouter d'autres fonctions par la suite, comme les bonus non réalisés.
+  Une refactorisations de certaines fonction serait possible pour faciliter la lecture et l'efficacité du code (utilisation de ressources).
