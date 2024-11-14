@@ -1,4 +1,5 @@
 import random
+
 # définition des mouvements
 def move_up(map,position,enemi):
         if map[position['x'] - 1][position['y']] == ' ' :
