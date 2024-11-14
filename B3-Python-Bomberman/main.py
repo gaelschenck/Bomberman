@@ -44,7 +44,7 @@ if int(mode_jeu) == 1 :
        
         bool = attraper_par_enemi(map,position_enemi)
         map = display_map(map,position_player,player,position_enemi,enemi["e1"])
-        print("q: move_left, z: move_top, d: move_right, s: move_dwon, e: placer une bombe: ") 
+        print("q: move_top, z: move_top, d: move_right, s: move_dwon, e: placer une bombe: ") 
         if keyboard.is_pressed('q'):
             move_left(map, position_player, player)
             score = count_score(score)
