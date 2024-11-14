@@ -16,3 +16,5 @@ def after_explo_bomb(map, x, y,bomb, enemi,mur_cassable):
             map[nx][ny] = " "
         elif map[nx][ny] == enemi["e1"]:
             enemi["e1"] = " "
+            
+        

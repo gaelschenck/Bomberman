@@ -48,28 +48,26 @@ if int(mode_jeu) == 1 :
         print("q: move_left, z: move_top, d: move_right, s: move_dwon, e: placer une bombe: ") 
         if keyboard.is_pressed('q'):
             move_left(map, position_player, player)
-            count_score(score)
+            score = count_score(score)
         if keyboard.is_pressed('s'):
             move_dwon(map, position_player,player)
-            count_score(score)
+            score = count_score(score)
         if keyboard.is_pressed('d'):
             move_right(map,position_player,player)
-            count_score(score)
+            score = count_score(score)
         if keyboard.is_pressed('z'):
             move_up(map,position_player,player)
-            count_score(score)
+            score = count_score(score)
         if keyboard.is_pressed('e'):
             place_bomb(map,position_player,bomb,enemi,mur_cassable)
            
-        if keyboard.is_pressed(' '):
-            print("mettre le jeu  en pause")
         if not(bool):
             if compteur_boucle % 10 == 0:
                 move_enemi(map,position_enemi,enemi["e1"])
             compteur_boucle += 1  
         if bool:
-            print("vous avez perdue")
-            print(f"score:{score}")
+            print("--------------------------------------------------------vous avez perdu------------------------------------------------")
+            print(f"---score:{score}")
             break
         time.sleep(0.1)
 
