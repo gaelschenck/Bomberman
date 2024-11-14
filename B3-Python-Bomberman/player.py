@@ -37,5 +37,5 @@ def place_bomb(map,position,bomb,enemi,mur_cassable):
         timer_2 = threading.Timer(5, after_explo_bomb, args=(map, xb, yb,bomb,enemi,mur_cassable))
         timer_1.start()
         timer_2.start()
-    return bool
+    
  

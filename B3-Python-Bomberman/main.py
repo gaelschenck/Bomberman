@@ -30,7 +30,6 @@ bordure_bas_haut = fg.blue + "_" + fg.rs
 
 print("--------------------------------MODE DE JEU-----------------------------------------")
 print("1- MODE HISTOIRE")
-print("3- quitter le jeu")
 mode_jeu = input()
 
 if int(mode_jeu) == 1 : 
@@ -45,7 +44,7 @@ if int(mode_jeu) == 1 :
        
         bool = attraper_par_enemi(map,position_enemi)
         map = display_map(map,position_player,player,position_enemi,enemi["e1"])
-        print("q: move_left, z: move_top, d: move_right, s: move_dwon, e: placer une bombe: ") 
+        print("q: move_top, z: move_top, d: move_right, s: move_dwon, e: placer une bombe: ") 
         if keyboard.is_pressed('q'):
             move_left(map, position_player, player)
             score = count_score(score)
@@ -59,10 +58,8 @@ if int(mode_jeu) == 1 :
             move_up(map,position_player,player)
             score = count_score(score)
         if keyboard.is_pressed('e'):
-            bool2 = place_bomb(map,position_player,bomb,enemi,mur_cassable)
-        if bool2
-        break               
-           
+             place_bomb(map,position_player,bomb,enemi,mur_cassable)
+             
         if not(bool):
             if compteur_boucle % 10 == 0:
                 move_enemi(map,position_enemi,enemi["e1"])
@@ -71,6 +68,10 @@ if int(mode_jeu) == 1 :
             print("--------------------------------------------------------vous avez perdu------------------------------------------------")
             print(f"---score:{score}")
             break
+        if enemi["e1"] == " ":
+                print("--------------------------------------------------------vous avez gagné------------------------------------------------")
+                print(f"---score:{score}")
+                break
         time.sleep(0.1)
 
       

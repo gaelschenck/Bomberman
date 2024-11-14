@@ -16,7 +16,8 @@ Dépendances :
   - sty , pour les couleurs.
   - os
   - time , pour la gestion des timer
-  - pynput , pour la gestion des déplacements via le clavier
+  - keyboard , pour la gestion des déplacements via le clavier
+  - random , pour gérer les déplacements des ennemis
 
 Axe d'amélioration :
   Nous pourrions faire évoluer ce projet en une approche orientée objet, qui faciliterai l'utilisation du code sur du long terme.
