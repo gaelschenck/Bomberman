@@ -1,14 +1,13 @@
 from bomb import  explo_bomb,after_explo_bomb
 import threading
+
+# mouvement du personnage
 def move_dwon(map,position,player):
     if map[position['x'] + 1][position['y']] == ' ' :
         map[position['x']][position['y']] = ' '
         map[position['x'] + 1][position['y']] = player
         position['x'] = position['x']  + 1
-     
-    
-    
-    
+
 def move_up(map,position,player):
     if map[position['x'] - 1][position['y']] == ' ' :
         map[position['x']][position['y']] = ' '
@@ -28,6 +27,7 @@ def move_left(map,position,player):
         map[position['x']][position['y'] - 1] = player
         position['y'] = position['y']  - 1 
 
+# placement des bombes
 def place_bomb(map,position,bomb,enemi,mur_cassable):
     xb = position['x']
     yb = position['y'] + 1
