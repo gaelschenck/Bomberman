@@ -1,44 +1,18 @@
-from sty import fg, RgbFg, Style
-from map import MUR
+def explo_bomb(map, x, y,bomb):
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1), (1, -1), (-1, -1), (-1, 1), (1, 1)]
+    for dx, dy in directions:
+        nx, ny = x + dx, y + dy
+        if map[nx][ny] == " " :
+            map[nx][ny] = bomb
 
-
-fg.rouge = Style(RgbFg(255, 150, 50))
-fg.rouge = Style(RgbFg(255,0,0))
-bomb = fg.orange + "*" + fg.rs
-def explo_bomb(map,x,y):
-    if map[x-1][y] == " ":
-        map[x-1][y] =  bomb
-    if map[x + 1][y] == " ":
-        map[x + 1][y] = bomb
-    if map[x][y-1] == " ":
-        map[x][y-1] = bomb
-    if map[x][y+1] == " ":
-        map[x][y+1] = bomb
-    if map[x + 1][y - 1] == " ":
-        map[x + 1][y - 1] = bomb
-    if map[x - 1][y -1] == " ":
-        map[x -1][y-1] = bomb
-    if map[x -1][y + 1] == " ":
-        map[x -1][y + 1] = bomb
-    if map[x+1][y+1] == " ":
-        map[x + 1][y + 1] = bomb
-
-def after_explo_bomb(map,x,y,ENEMI):
+def after_explo_bomb(map, x, y,bomb, enemi,mur_cassable):
+    # Remplacement de la bombe par un espace
     if map[x][y] == bomb:
         map[x][y] = " "
-    if map[x-1][y] == bomb or map[x-1][y] == MUR or map[x-1][y] == ENEMI:
-        map[x-1][y] =  " "
-    if map[x + 1][y] == bomb or map[x + 1][y] == MUR or map[x + 1][y] == ENEMI:
-        map[x + 1][y] = " "
-    if  map[x][y-1] == bomb or map[x][y-1] == MUR or map[x][y-1] == ENEMI:
-        map[x][y-1] = " "
-    if map[x][y+1] == bomb or map[x][y+1] == MUR or map[x][y+1] == ENEMI:
-        map[x][y+1] = " "
-    if map[x + 1][y - 1] == bomb or map[x + 1][y - 1] == MUR or map[x + 1][y - 1] == ENEMI:
-        map[x + 1][y - 1] = " "
-    if map[x -1][y-1] == bomb or map[x -1][y-1] == MUR or map[x -1][y-1] == ENEMI:
-        map[x -1][y-1] = " "
-    if map[x -1][y + 1] == bomb or map[x -1][y + 1] == MUR or map[x -1][y + 1] == ENEMI:
-        map[x -1][y + 1] = " "
-    if map[x + 1][y + 1] == bomb or map[x + 1][y + 1] == MUR or map[x + 1][y + 1] == ENEMI:
-        map[x + 1][y + 1] = " "
+    
+    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1), (1, -1), (-1, -1), (-1, 1), (1, 1)]:
+        nx, ny = x + dx, y + dy
+        if map[nx][ny] == bomb or map[nx][ny] == mur_cassable:
+            map[nx][ny] = " "
+        elif map[nx][ny] == enemi["e1"]:
+            enemi["e1"] = " "

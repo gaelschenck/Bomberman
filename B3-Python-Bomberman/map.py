@@ -1,40 +1,31 @@
 import random
-from sty import fg, rs, RgbFg, Style
-fg.orange = Style(RgbFg(255, 150, 50))
-fg.bleu = Style(RgbFg(0,0,255))
-fg.rouge = Style(RgbFg(255,0,0))
-VIDE = " "
-MUR = fg.orange + '|' + fg.rs
-MUR_INCASABLE = "|"
+import os
 
-def creat_mur_enemi(TAILLE_GRILLE):
-    grille = [[VIDE for _ in range(TAILLE_GRILLE)] for _ in range(TAILLE_GRILLE)]
-    for _ in range(TAILLE_GRILLE):
-        x, y = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
-        grille[x][y] = MUR
-        z, w = random.randint(0, TAILLE_GRILLE-1), random.randint(0, TAILLE_GRILLE-1)
-        grille[w][z] = MUR_INCASABLE
-    return grille
-def creat_bordure(grille, TAILLE_GRILLE):
-    for _ in range(TAILLE_GRILLE):
-        grille[0][_] = fg.bleu +  "-" + fg.rs   # bordure du haut
-        grille[TAILLE_GRILLE - 1][_] = fg.bleu +  "-" + fg.rs   # Bordure du bas
+def creat_map(dimension,mur_cassable,mur_incassable,bordure_gauche_droite,bordure_bas_haut):
+    map = [[" " for _ in range(dimension)] for _ in range(dimension)]
+    for _ in range(dimension):
+        x, y = random.randint(0, dimension-1), random.randint(0, dimension-1)
+        map[x][y] = mur_cassable
+        z, w = random.randint(0, dimension-1), random.randint(0, dimension-1)
+        map[w][z] = mur_incassable
+    for _ in range(dimension):
+        map[0][_] = bordure_bas_haut   # bordure du haut
+        map[dimension - 1][_] = bordure_bas_haut   # Bordure du bas
         if _ == 0 :
-            grille[_][0] = fg.bleu +  "-" + fg.rs 
+            map[_][0] = bordure_bas_haut
         if _ > 0 :
-            grille[_][0] = fg.bleu +  "|" + fg.rs  # bordure du gauche
-        grille[_][TAILLE_GRILLE - 1] = fg.bleu +  "|" + fg.rs  
-        
-    return grille
+            map[_][0] = bordure_gauche_droite  # bordure du gauche
+        map[_][dimension - 1] = bordure_gauche_droite
 
-def creat_map(TAILLE_GRILLE):
-     grille = creat_mur_enemi(TAILLE_GRILLE)
-     grille = creat_bordure(grille, TAILLE_GRILLE)
-     return grille
-def init_map(TAILLE_GRILLE):
-        init_grille = creat_map(TAILLE_GRILLE)
-        return init_grille
-
-
+    for ligne in map:
+        print(' '.join(ligne))
     
-
+    return map
+        
+def display_map(map,position_player,player,position_enemi,enemi):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    map[position_enemi['x']][position_enemi['y']] = enemi
+    map[position_player['x']][position_player['y']] = player
+    for ligne in map:
+        print(' '.join(ligne))
+    return map
