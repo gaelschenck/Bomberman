@@ -63,7 +63,7 @@ if int(mode_jeu) == 1 :
                 move_enemi(map,position_enemi,enemi["e1"])
             compteur_boucle += 1  
         if bool:
-            print("avez perdue")
+            print("vous avez perdue")
             break
         time.sleep(0.1)
 
