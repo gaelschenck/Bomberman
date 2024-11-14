@@ -59,7 +59,9 @@ if int(mode_jeu) == 1 :
             move_up(map,position_player,player)
             score = count_score(score)
         if keyboard.is_pressed('e'):
-            place_bomb(map,position_player,bomb,enemi,mur_cassable)
+            bool = place_bomb(map,position_player,bomb,enemi,mur_cassable)
+            if bool:
+                break               
            
         if not(bool):
             if compteur_boucle % 10 == 0:
