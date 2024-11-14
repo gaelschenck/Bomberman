@@ -5,13 +5,14 @@ from map import creat_map,display_map
 from player import move_dwon,move_left,move_right,move_up,place_bomb
 from enemi import move_enemi
 from enemi import attraper_par_enemi
+from score import count_score
 fg.orange = Style(RgbFg(255, 150, 50))
 fg.rouge = Style(RgbFg(255,0,0))
 fg.bleu = Style(RgbFg(0,0,255))
 case_vide = " "
 mur_cassable = fg.orange + '|' + fg.rs
 mur_incassable = "|"
-
+score = 0
 player = "p"
 enemi = {
         "e1" :fg.rouge + "E" + fg.rs
@@ -47,23 +48,28 @@ if int(mode_jeu) == 1 :
         print("q: move_left, z: move_top, d: move_right, s: move_dwon, e: placer une bombe: ") 
         if keyboard.is_pressed('q'):
             move_left(map, position_player, player)
+            count_score(score)
         if keyboard.is_pressed('s'):
             move_dwon(map, position_player,player)
+            count_score(score)
         if keyboard.is_pressed('d'):
             move_right(map,position_player,player)
+            count_score(score)
         if keyboard.is_pressed('z'):
             move_up(map,position_player,player)
+            count_score(score)
         if keyboard.is_pressed('e'):
             place_bomb(map,position_player,bomb,enemi,mur_cassable)
            
         if keyboard.is_pressed(' '):
             print("mettre le jeu  en pause")
         if not(bool):
-            if compteur_boucle % 20 == 0:
+            if compteur_boucle % 10 == 0:
                 move_enemi(map,position_enemi,enemi["e1"])
             compteur_boucle += 1  
         if bool:
             print("vous avez perdue")
+            print(f"score:{score}")
             break
         time.sleep(0.1)
 
