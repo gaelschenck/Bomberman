@@ -46,7 +46,7 @@ if int(mode_jeu) == 1 :
    compteur_boucle = 0
    while True:
        
-        bool = attraper_par_enemi(map,position_enemi)
+        fin_du_jeu = attraper_par_enemi(map,position_enemi)
         map = display_map(map,position_player,player,position_enemi,enemi["e1"])
         print("q: move_left, z: move_top, d: move_right, s: move_dwon, e: placer une bombe: ") 
         if keyboard.is_pressed('q'):
@@ -64,15 +64,16 @@ if int(mode_jeu) == 1 :
         if keyboard.is_pressed('e'):
              place_bomb(map,position_player,bomb,enemi,mur_cassable)
              
-        if not(bool):
+        if not(fin_du_jeu):
             if compteur_boucle % 10 == 0:
                 move_enemi(map,position_enemi,enemi["e1"])   
             compteur_boucle += 1    
-        if bool:
+        if fin_du_jeu:
             print("--------------------------------------------------------vous avez perdu------------------------------------------------")
             print(f"---score:{score}")
             break
         if enemi["e1"] == " ":
+            time.sleep(1)
             print("--------------------------------------------------------vous avez gagné------------------------------------------------")
             print(f"---score:{score}")
             break
