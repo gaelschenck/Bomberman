@@ -4,9 +4,9 @@ Point d'entrée du jeu Bomberman
 import time
 from sty import fg, RgbFg, Style
 import keyboard
-from map import creat_map, display_map
-from player import move_dwon, move_left, move_right, move_up, place_bomb
-from enemi import move_enemi, attraper_par_enemi
+from map import create_map, display_map
+from player import move_down, move_left, move_right, move_up, place_bomb
+from enemi import move_enemy, attraper_par_enemi
 from score import count_score
 
 
@@ -43,7 +43,7 @@ mode_jeu = input()
 # ------
 if int(mode_jeu) == 1:
     dimension = int(input("entrer la dimension du map: "))
-    MAP = creat_map(
+    MAP = create_map(
         dimension, MUR_CASSABLE, MUR_INCASSABLE, BORDURE_GAUCHE_DROITE, BORDURE_BAS_HAUT
         )
     position_enemi = {
@@ -59,7 +59,7 @@ if int(mode_jeu) == 1:
             move_left(MAP, POSITION_PLAYER, PLAYER)
             SCORE = count_score(SCORE)
         if keyboard.is_pressed('s'):
-            move_dwon(MAP, POSITION_PLAYER, PLAYER)
+            move_down(MAP, POSITION_PLAYER, PLAYER)
             SCORE = count_score(SCORE)
         if keyboard.is_pressed('d'):
             move_right(MAP, POSITION_PLAYER, PLAYER)
@@ -72,15 +72,23 @@ if int(mode_jeu) == 1:
 
         if not FIN_JEU:
             if COMPTEUR_BOUCLE % 10 == 0:
-                move_enemi(MAP, position_enemi, ENEMI["e1"])
+                move_enemy(MAP, position_enemi, ENEMI["e1"])
             COMPTEUR_BOUCLE += 1
         if FIN_JEU:
-            print("--------------------------------------------------------vous avez perdu------------------------------------------------")
+            print(
+                "--------------------------------------------------------"
+                "vous avez perdu"
+                "------------------------------------------------"
+)
             print(f"---score:{SCORE}")
             break
         if ENEMI["e1"] == " ":
             time.sleep(1)
-            print("--------------------------------------------------------vous avez gagné------------------------------------------------")
+            print(
+                 "--------------------------------------------------------"
+                 "vous avez perdu"
+                    "------------------------------------------------"
+)
             print(f"---score:{SCORE}")
             break
-        time.sleep(0.1)      
+        time.sleep(0.1)
